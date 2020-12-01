@@ -79,6 +79,7 @@
 <body id="book_page">
     
 <div class="navbar">
+    <div style="border:2px solid white;width: 105px;border-radius: 50px;"><span style="color: white;font-size: 30px;color: green;">CED</span><span style="color: white;font-size: 20px;color: red;">CAB</span></div>
     <a href="index.php">Home</a>
   <a href="book.php">Book Ride</a>
   <div class="dropdown">
