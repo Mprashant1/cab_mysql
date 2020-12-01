@@ -66,12 +66,12 @@
   if($_SESSION){
      if($_SESSION['username']=='admin'){
          echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
-         echo "<a href='../signin.php' id='logout' style='color: white; float: right;margin-top: 3px;'>LogOut</a>";
+         echo "<a href='../logout.php' id='logout' style='color: white; float: right;margin-top: 3px;'>LogOut</a>";
      }else{
         header('Location:../signin.php');
      }
     }
-?></p>
+?></p> 
 </div>
   <div class="grid-layout">
     <div class="item span-2" style="text-align: center;" id="aprUser"><h3>Approved Users:</h3><span style="color: green;font-size: 80px;"><?php echo $_SESSION['count']=$s3['count'];?></span></div>

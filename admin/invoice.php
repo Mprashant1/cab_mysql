@@ -56,7 +56,7 @@
   if($_SESSION){
      if($_SESSION['username']=='admin'){
          echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
-         echo "<a href='../signin.php' id='logout' style='color: white; float: right;margin-top: 3px;'>LogOut</a>";
+         echo "<a href='../logout.php' id='logout' style='color: white; float: right;margin-top: 3px;'>LogOut</a>";
      }else{
         header('Location:../signin.php');
      }

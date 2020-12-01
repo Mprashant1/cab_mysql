@@ -100,15 +100,16 @@
       <a href="updatepassword.php">Change Password</a>
     </div>
   </div> 
-  <p style="float: right;margin-left: 100px;color: white;margin-top: 10px;"><?php 
-  if($_SESSION){
-    echo $_SESSION['username'];
-    echo "<a href='signin.php' id='logout' style='color: white; float: left;'>LogOut</a>";
+  <?php 
+    if($_SESSION){
+     if($_SESSION['username']!='admin'){
+         echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
+         echo "<a href='logout.php' id='logout' style='color: white; float: right;margin-top:5px;'>LogOut</a>";
+     }else{
+        header('Location:signin.php');
+     }
     }
-    else{
-        echo "<a href='signin.php'>Login</a>";
-    }
-?></p>
+  ?>
 </div>
 </div>
     <div id="main">
