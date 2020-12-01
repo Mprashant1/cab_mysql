@@ -8,6 +8,10 @@ if(isset($_POST['submit'])) {
     $db=new DBconnection();
     $sql=$User->login($username,$password,$db->conn);
     echo $sql;
+    if(isset($_SESSION['data'])){
+        header('Location:invoice2.php');
+    }
+
    // unset($_SESSION['username']);
     //echo $_SESSION['username'];
    

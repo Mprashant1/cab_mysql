@@ -109,6 +109,8 @@
      }else{
         header('Location:signin.php');
      }
+    }else{
+      echo "<a href='signin.php' id='login' style='color: white; float: right;margin-top:5px;'>LogIn</a>";
     }
   ?>
 </div>
@@ -208,6 +210,7 @@
                             text+="<td>"+response[i]['monthname']+"</td>";
                           }
                           text+="</tr></tbody>";
+                          // $('#month_filter').hide();
                         }
 
                          $('#month_filter').append(value);

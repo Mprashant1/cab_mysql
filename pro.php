@@ -1,6 +1,6 @@
 <?php
-		//include "user.php";
-		session_start();
+		include "user.php";
+		//session_start();
 		require_once "ride.php";
 		$origin=$_POST['p'];
 		$des=$_POST['d'];
@@ -17,9 +17,6 @@
 		$f=$distance[$origin];
 	 	$s=$distance[$des];
 		$total_distance=abs($f-$s);
-	 
-		
-		// if(isset($_SESSION['username'])){
 		
 	 if($f==$s){
 	 	$text="Pick Up and Drop Point must be different!!!";
@@ -95,21 +92,22 @@
 	 /*$ob=array('fare'=>$price,'distance'=>$total);
 	 echo json_encode($ob);*/
 	 
-		$_SESSION['data']['from']=$origin;
-		$_SESSION['data']['to']=$des;
-		$_SESSION['data']['cab']=$type;
-		$_SESSION['data']['luggage']=$luggage;
-		$_SESSION['data']['total_dis']=$total_distance;
-		$_SESSION['data']['total_fare']=$price;
+		// $_SESSION['data']['from']=$origin;
+		// $_SESSION['data']['to']=$des;
+		// $_SESSION['data']['cab']=$type;
+		// $_SESSION['data']['luggage']=$luggage;
+		// $_SESSION['data']['total_dis']=$total_distance;
+		// $_SESSION['data']['total_fare']=$price;
 	}
 	//print_r($price);
 	//$_SESSION['trip']=array('from'=>$origin,'to'=>$des,'type'=>$type,'luggage'=>$luggage);
-   //      $ride=new Ride();
-		 // $db=new DBconnection();
-		 // $sql=$ride->bookRide($_SESSION['username'],$origin,$des,$total,$luggage,$price,$db->conn,);
-	  //    echo json_encode($sql);
- 		//  // }else{
+         $ride=new Ride();
+		  $db=new DBconnection();
+		  $sql=$ride->bookRide($_SESSION['username'],$origin,$des,$total,$luggage,$price,$db->conn,);
+		  if($sql){
+	      echo json_encode($sql);}
+ 		  else{
 		 	echo json_encode("error");
-	   // }
-	   // echo json_encode($_SESSION['data']);
+	    }
+	   
 ?>

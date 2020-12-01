@@ -81,7 +81,7 @@
 <div class="navbar">
   <div style="border:2px solid white;width: 105px;border-radius: 50px;"><span style="color: white;font-size: 30px;color: green;">CED</span><span style="color: white;font-size: 20px;color: red;">CAB</span></div>
     <a href="index.php">Home</a>
-  <a href="book.php">Book Ride</a>
+  <!-- <a href="book.php">Book Ride</a>
   <div class="dropdown">
     <button class="dropbtn">Ride
     </button>
@@ -99,15 +99,38 @@
       <a href="updateUser.php">Update information</a>
       <a href="updatepassword.php">Change Password</a>
     </div>
-  </div>
+  </div> -->
   <?php 
-    if($_SESSION){
+    if(isset($_SESSION['username'])){
      if($_SESSION['username']!='admin'){
          echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
          echo "<a href='logout.php' id='logout' style='color: white; float: right;margin-top:5px;'>LogOut</a>";
+         echo '<a href="book.php">Book Ride</a>
+              <div class="dropdown">
+                <button class="dropbtn">Ride
+                </button>
+                <div class="dropdown-content">
+                  <a href="PendingRide.php">Pending Ride</a>
+                  <a href="CompleteRide.php">Completed Rides</a>
+                  <a href="AllRide.php">All Rides</a>
+                  <a href="CompleteRide.php">Total Spent</a>
+                </div>
+              </div> 
+              <div class="dropdown">
+                <button class="dropbtn">Accounts
+                </button>
+                <div class="dropdown-content">
+                  <a href="updateUser.php">Update information</a>
+                  <a href="updatepassword.php">Change Password</a>
+                </div>
+              </div>';
+              echo '<pre>';
+              //print_r($_SESSION['data']);
      }else{
         header('Location:signin.php');
      }
+    }else{
+      echo "<a href='signin.php' id='login' style='color: white; float: right;margin-top:5px;'>LogIn</a>";
     }
   ?>
 </div>

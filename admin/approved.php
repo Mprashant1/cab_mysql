@@ -81,8 +81,8 @@
         echo $sql['text'];
      ?>
 </table>
-<table id="sorted_tbl1"></table>
-<table id="sorted_tbl2"></table>
+<table id="sorted_tbl1" style="display: block;"></table>
+<table id="sorted_tbl2" style="display: block;"></table>
 <div id="result" style="display: none;border:none;"></div>
 <script>
     $(document).ready(function(){
@@ -124,8 +124,8 @@
                           text+="</tr></tbody>";
                         }
 
-                        $('#sorted_tbl1').append(value);
-                        $('#sorted_tbl1').append(text);
+                        $('#sorted_tbl1').html(value);
+                        $('#sorted_tbl1').html(text);
                        }else{
                           $('#unsorted_tbl').hide();
                           $('#sorted_tbl1').hide();

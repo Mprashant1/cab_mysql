@@ -1,6 +1,7 @@
 <?php
 	include "user.php";
 	include "ride.php";
+	//session_start();
 	 include_once "config.php";
 	if(isset($_POST['submit'])){
 		$name=$_POST['name'];
@@ -39,5 +40,25 @@
          $sq=$loc->filterWeek($user,$week,$db->conn);
        		 //print_r($sq);
        		echo json_encode($sq);
+			}
+		if(isset($_POST['continue'])){
+		$cont=$_POST['continue'];
+		 $origin=$_SESSION['data']['from'];
+		 $des=$_SESSION['data']['to'];
+		 $totaldistance=$_SESSION['data']['total_dis'];
+		 $luggage=$_SESSION['data']['luggage'];
+		 $price=$_SESSION['data']['total_fare'];
+		 $ride=new Ride();
+		 $User=new user();
+		 $db=new DBconnection();
+		 $user=$_SESSION['username'];
+		 $sql=$ride->bookRide($user,$origin,$des,$totaldistance,$luggage,$price,$db->conn,);
+		 
+	     echo json_encode($sql);
+ 		//  // }else{
+		 	// echo json_encode("error");
+	   // }
+       		 //print_r($sq);
+       		
 			}
 ?>

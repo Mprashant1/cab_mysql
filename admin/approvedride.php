@@ -150,7 +150,7 @@
         //         url: 'index.php',
         //         type: 'post',
         //         dataType:'json',
-        //         data: {invoice:value,ride: <?php echo $_SESSION['ride_id'];?>},
+                // data: {invoice:value,ride: <?php ;?>},
         //         success: function(response) {
         //             console.log(response); 
         //             //console.log($s); 
@@ -167,7 +167,7 @@
                 success: function(response) {
                     console.log(response.result);
                     if(response.value=='0'){ 
-                    $('#sorted_tbl2').hide();
+                    //$('#sorted_tbl2').hide();
                     // $('#sorted_tbl3').hide();
                     // $('#sorted_tbl4').hide();
                     $('#unsorted_tbl').hide();
@@ -205,7 +205,7 @@
                           $('#unsorted_tbl').hide();
                           $('#sorted_tbl1').hide();
                           //$('#sorted_tbl3').hide();
-                          $('#sorted_tbl4').hide();
+                          //$('#sorted_tbl4').hide();
                     var text="";
                     var value="";
                     value+="<thead><tr>"

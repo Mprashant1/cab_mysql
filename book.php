@@ -55,7 +55,7 @@
                     }
                     ev.preventDefault();
                     $.ajax({
-                    url: "process1.php",
+                    url: "pro.php",
                     type: "post",
                     dataType:'json',
                     data:{p:pick, d:drop, l:luggage_value, c:cab},
@@ -101,12 +101,10 @@
     </div>
   </div>
   <?php 
-    if($_SESSION){
+    if(isset($_SESSION['username'])){
      if($_SESSION['username']!='admin'){
          echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
          echo "<a href='logout.php' id='logout' style='color: white; float: right;margin-top:5px;'>LogOut</a>";
-     }else{
-        header('Location:signin.php');
      }
     }
   ?>

@@ -22,18 +22,17 @@
 			   	 if($row['isadmin']==1){
 			   	 	$_SESSION['username']=$username;
 			   	 	header('Location:admin/admin.php');
-			   	 }elseif($row['isblock']==1){
-			   	 	$rtn="U r blocked pls contact admin!!!";
-			   	 	
-			   	 }else{
+			   	 }else if($row['isblock']==1){
+			   	 	$rtn="U r blocked pls contact admin!!!";	
+			   	 }else if($row['isadmin']==0 && $row['isblock']==0){
 			   	 	$_SESSION['username']=$username;
-			   	 	header('Location:index.php');
+			   	 	header('Location:book.php');
 			   	 }
-			   	}
-			   	 
-			   	}else{
+			   }
+			}else{
 			   		$rtn="Login Failed";
 			   	}
+
 			   	return $rtn;
 		}
 		function register($username,$password,$name,$mobile,$conn){

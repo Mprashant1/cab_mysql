@@ -100,7 +100,7 @@
       <a href="updatepassword.php">Change Password</a>
     </div>
   </div> 
-  <?php 
+ <?php 
     if($_SESSION){
      if($_SESSION['username']!='admin'){
          echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
@@ -108,6 +108,8 @@
      }else{
         header('Location:signin.php');
      }
+    }else{
+      echo "<a href='signin.php' id='login' style='color: white; float: right;margin-top:5px;'>LogIn</a>";
     }
   ?>
 </div>
