@@ -82,7 +82,7 @@
             <th>Total Fare</th>
             <th>Status</th>
             <th>Customer Id</th>
-            <th>Request</th>
+            <th>Invoice</th>
         </tr>
     </thead>
    <?php 
@@ -97,8 +97,7 @@
                   <td>".$sq['total_fare']."</td>
                   <td>".$sq['status']."</td>
                   <td>".$sq['customer_user_id']."</td>
-              <td><input type='button' id=".$sq['ride_id']." value='Edit' name='edit'>
-              <input type='button' id=".$sq['ride_id']." value='Delete' name='delete'></td>
+              <td><a href='invoice.php?id=".$sq['ride_id']."'>Invoice</a></td>
               </tr>";
        }
         echo "</tbody>";
@@ -143,20 +142,21 @@
 <table id="sorted_tbl4" style="display: block;"></table>
 <script>
     $(document).ready(function(){
-        $('input[type="button"]').click(function(){
-            var value=$(this).attr("id");
-            //console.log($(this).attr("id"));
-            $.ajax({
-                url: 'index.php',
-                type: 'post',
-                dataType:'json',
-                data: {action:value},
-                success: function(response) {
-                    console.log(response); 
-                    //console.log($s); 
-                }
-            });
-        })
+        // $('input[name="invoice"]').click(function(){
+        //     var value=$(this).attr("id");
+        //     var id=$('input[name="hiddenField"]').val();
+        //     console.log(id);
+        //     $.ajax({
+        //         url: 'index.php',
+        //         type: 'post',
+        //         dataType:'json',
+        //         data: {invoice:value,ride: <?php echo $_SESSION['ride_id'];?>},
+        //         success: function(response) {
+        //             console.log(response); 
+        //             //console.log($s); 
+        //         }
+        //     });
+        // })
         $('#fare_sort_button').click(function(){
           var value=$('#fare').val();
           $.ajax({

@@ -19,7 +19,7 @@
     </title>
     <link type="text/css" rel="stylesheet" href="admin/resources/css/demo.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     <script type="text/javascript">
+     <!-- <script type="text/javascript">
         
         function myfun(){
             var cab=document.getElementById('cab-type').value;
@@ -74,11 +74,12 @@
             })
         })
         
-    </script>
+    </script> -->
 </head>
 <body>
     
 <div class="navbar">
+    <a href="index.php">Home</a>
   <a href="book.php">Book Ride</a>
   <div class="dropdown">
     <button class="dropbtn">Ride
@@ -146,6 +147,5 @@
        
      ?>
 </table>
-    </div>
 </body>
 </html>

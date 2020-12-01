@@ -74,7 +74,6 @@
             <th>Mobile Number</th>
             <th>Block Status</th>
             <th>Admin Status</th>
-            <th>Actions</th>
         </tr>
     </thead>
     <?php 
@@ -84,6 +83,7 @@
 </table>
 <table id="sorted_tbl1"></table>
 <table id="sorted_tbl2"></table>
+<div id="result" style="display: none;border:none;"></div>
 <script>
     $(document).ready(function(){
         $('#user_sort_button').click(function(){
@@ -162,6 +162,51 @@
                 }
             });
             })
+        // $('input[name="edit"]').click(function(){
+        //     var value=$(this).attr("id");
+        //     console.log(value);
+        //      $.ajax({
+        //          url: 'index1.php',
+        //          type: 'post',
+        //          dataType:'json',
+        //          data: {a:value},
+        //          success: function(response) {
+        //            $('#result').append(response);
+        //            $('#result').show();
+        //            $('#unsorted_tbl').hide();
+
+        //            $('input[name="update"]').click(function(){
+        //              var value=$(this).attr("id");
+        //              var loc=$('input[name="locationname"]').val();
+        //               var dis=$('input[name="distance"]').val();
+        //               var avail=$('input[name="available"]').val();
+        //              $.ajax({
+        //                url: 'index1.php',
+        //                type: 'post',
+        //                dataType:'json',
+        //                data: {location:value,loc:loc,dis:dis,avail:avail},
+        //                success: function(response) {
+        //                  $('#result').hide();
+        //                  console.log(response);
+
+        //                }
+
+        //              })
+        //          })
+        //          }
+        //      });
+        // })
+        // $('input[name="delete"]').click(function(){
+        //     var value=$(this).attr("id");
+        //     $.ajax({
+        //         url: 'index1.php',
+        //         type: 'post',
+        //         dataType:'json',
+        //         data: {delete:value},
+        //         success: function(response) {
+        //           console.log(response);
+        //         }
+        //       })
         })
 </script>
 </body>

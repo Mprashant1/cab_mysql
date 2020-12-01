@@ -81,6 +81,7 @@
 <body>
     
 <div class="navbar">
+  <a href="index.php">Home</a>
   <a href="book.php">Book Ride</a>
   <div class="dropdown">
     <button class="dropbtn">Ride

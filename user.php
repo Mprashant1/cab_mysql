@@ -27,7 +27,7 @@
 			   	 	
 			   	 }else{
 			   	 	$_SESSION['username']=$username;
-			   	 	header('Location:book.php');
+			   	 	header('Location:index.php');
 			   	 }
 			   	}
 			   	 
@@ -81,7 +81,7 @@
 			   	$res=$result->num_rows;
 			   		echo "<tbody>";
 			   	 while($row = $result->fetch_assoc()){
-			   	 	$text .= "<tr><td>".$row['user_id']."</td><td>".$row['user_name']."</td><td>".$row['name']."</td><td>".$row['mobile']."</td><td>".$row['isblock']."</td><td>".$row['isadmin']."</td><td ><input type='button' name='edit' id=".$row['user_id']." value='Edit'><input type='button' name='delete' id=".$row['user_id']." value='Delete'></td></tr>";
+			   	 	$text .= "<tr><td>".$row['user_id']."</td><td>".$row['user_name']."</td><td>".$row['name']."</td><td>".$row['mobile']."</td><td>".$row['isblock']."</td><td>".$row['isadmin']."</td></tr>";
 	
 			   	}//echo "Registered success";
 			   }

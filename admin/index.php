@@ -8,6 +8,14 @@
 			$result = $user->update($id,$db->conn);
 			echo json_encode($result);
 		}
+		if(isset($_POST['invoice'])){
+			$id=$_POST['invoice'];
+			$ride=new Ride();
+			$db=new DBconnection();
+			$result = $ride->invoiceGenerate($id,$db->conn);
+			print_r($result);
+			echo json_encode($result);
+		}
 
 	
 	if(isset($_POST['action'])){

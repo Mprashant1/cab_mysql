@@ -62,7 +62,7 @@
     }
 ?></p> 
 </div>
-	<table style="display: block;">
+	<table style="display: block;" id="table">
     <thead>
         <tr>
             <th>Location Name</th>
@@ -85,7 +85,7 @@
         echo "</tbody>";
      ?>
 </table>
-<!-- <div id="result"></div> -->
+ <div id="result" style="display: none;border:none;"></div>
 <script>
     $(document).ready(function(){
         $('input[name="edit"]').click(function(){
@@ -97,6 +97,8 @@
                 data: {action:value},
                 success: function(response) {
                   $('#result').append(response);
+                  $('#result').show();
+                  $('#table').hide();
 
                   $('input[name="update"]').click(function(){
                     var value=$(this).attr("id");

@@ -253,7 +253,16 @@ table th {
   width: 310px;
   margin: 10px;
 }
-#book_page{
+/*#book_page{
   background-image:url(admin/resources/images/back.jpeg);
   background-repeat: no-repeat;
+}*/
+#main{
+  background-image: url("admin/resources/images/admin2.jpeg");
+  background-size: 500px;
+  margin:auto;
+  width: 60%;
+}
+#spent{
+  width: 700px;
 }

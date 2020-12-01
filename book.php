@@ -38,18 +38,20 @@
                 var cab=document.getElementById('cab-type').value;
                     
                   if (pick == "PickUp") {
-                    console.log("Pick Up point mandatory!!!");
+                    alert("Pick Up point mandatory!!!");
+                    return;
                     }
                     else if(drop=="Drop"){
-                        console.log("Drop point mandatory!!!");
+                        alert("Drop point mandatory!!!");
+                        return;
                     }else if(cab=="Cab Type"){
-                        console.log("Cab Type must be choosen!!!");
-
-                    }if(isNaN(luggage_value)  || luggage_value ==""){
+                        alert("Cab Type must be choosen!!!");
+                            return;
+                    }if(cab==='CedMicro'){
+                       luggage_value=0;
+                    }else if(isNaN(luggage_value ) || luggage_value==""){
                        alert("Luggage value must be numeric and not be blank!!!");
                        return;
-                    }else if(cab==='CedMicro'){
-                        document.getElementById('luggage').value=0;
                     }
                     ev.preventDefault();
                     $.ajax({
@@ -77,6 +79,7 @@
 <body id="book_page">
     
 <div class="navbar">
+    <a href="index.php">Home</a>
   <a href="book.php">Book Ride</a>
   <div class="dropdown">
     <button class="dropbtn">Ride

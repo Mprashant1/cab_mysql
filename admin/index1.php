@@ -41,5 +41,12 @@
 		$val=$User->updateAdminPassword($pastpassword,$newpassword,$user,$db->conn);
 		echo json_encode($val);
 	}
+    if(isset($_POST['a'])){
+			$id=$_POST['a'];
+			$loc=new user();
+			$db=new DBconnection();
+			$result = $loc->updateUser($id,$db->conn);
+			echo json_encode($result);
+		}
 
 ?>

@@ -1,76 +1,117 @@
-<?php
-  include "user.php";
-  $User=new user();
-  $db=new DBconnection();
-    
-    //$s=$User->update($db->conn);
-    
+<?php 
+    include "user.php";
+    include_once "config.php";
+    include "admin/location.php";
+    //session_start();
+    $User=new user();
+    $db=new DBconnection();
+    $loc=new Location();
+    $sq=$loc->SetLocation($db->conn);
+    //print_r($sq[0]['name']);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link type="text/css" rel="stylesheet" href="admin/resources/css/demo.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>
+    Register
+    </title>
+    <link type="text/css" rel="stylesheet" href="admin/resources/css/demo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script type="text/javascript">
+        
+        function myfun(){
+            var cab=document.getElementById('cab-type').value;
+            
+            if(cab==='CedMicro'){
+                 let luggage = document.getElementById('luggage');
+                luggage.setAttribute("disabled", true);
+            }else{
+                    luggage.removeAttribute("disabled", false);   
+                    }
+        }
+        $(document).ready(function() {
+            
+            $('#submit').click(function(ev) {
+                var pick=document.getElementById('pickup').value;
+                var drop=document.getElementById('drop').value;
+                var luggage_value=document.getElementById('luggage').value;
+                var cab=document.getElementById('cab-type').value;
+                    
+                  if (pick == "PickUp") {
+                    alert("Pick Up point mandatory!!!");
+                    return;
+                    }
+                    else if(drop=="Drop"){
+                        alert("Drop point mandatory!!!");
+                        return;
+                    }else if(cab=="Cab Type"){
+                        alert("Cab Type must be choosen!!!");
+                            return;
+                    }if(cab==='CedMicro'){
+                       luggage_value=0;
+                    }else if(isNaN(luggage_value ) || luggage_value==""){
+                       alert("Luggage value must be numeric and not be blank!!!");
+                       return;
+                    }
+                    ev.preventDefault();
+                    $.ajax({
+                    url: "process1.php",
+                    type: "post",
+                    dataType:'json',
+                    data:{p:pick, d:drop, l:luggage_value, c:cab},
+                    success: function(result) {
+                        if(result==="error"){
+                            window.location.replace("signin.php");
+                        }else{
+                            window.location.replace("PendingRide.php");
+                        }
+                    },
+                });
+            });
+            $('#logout').click(function(){
+                 //session_destroy();
+                window.location.replace("signin.php");
+            })
+        })
+        
+    </script>
 </head>
-<body>
-
+<body id="book_page" style="background-image: url('admin/resources/images/back.jpeg');background-repeat: no-repeat;background-size: cover;">
+    
 <div class="navbar">
-  <!-- <p style="float: right;color: white;margin-top: 10px;"> --><?php
-  if($_SESSION){
-     if($_SESSION['username']!='admin'){
-         echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
-         echo '<a href="book.php">Book Ride</a>';
-         echo "<a href='signin.php' id='logout' style='color: white; float: right;margin-top:5px;'>LogOut</a>";
-     }else{
-        header('Location:signin.php');
-     }
-    }
-  ?></p>
-  <!-- <div class="dropdown">
+    <a href="index.php">Home</a>
+  <a href="book.php">Book Ride</a>
+  <div class="dropdown">
     <button class="dropbtn">Ride
     </button>
     <div class="dropdown-content">
-      <a href="#">Pending Ride</a>
-      <a href="#">Completed Rides</a>
-      <a href="#">All Rides</a>
+      <a href="PendingRide.php">Pending Ride</a>
+      <a href="CompleteRide.php">Completed Rides</a>
+      <a href="AllRide.php">All Rides</a>
+      <a href="CompleteRide.php">Total Spent</a>
     </div>
   </div> 
   <div class="dropdown">
     <button class="dropbtn">Accounts
     </button>
     <div class="dropdown-content">
-      <a href="#">Update information</a>
-      <a href="#">Change Password</a>
+      <a href="updateUser.php">Update information</a>
+      <a href="updatepassword.php">Change Password</a>
     </div>
-  </div>  -->
-  <!-- <div class="dropdown">
-    <button class="dropbtn">Filter 
-    </button>
-    <div class="dropdown-content">
-      <a href="pending.php">By Month</a>
-      <a href="approved.php">By Week</a>
-    </div>
-  </div> 
-  <div class="dropdown">
-    <button class="dropbtn">Organise 
-    </button>
-    <div class="dropdown-content">
-      <a href="pending.php">By Date</a>
-      <a href="approved.php">By Ride</a>
-      <a href="approved.php">By Fare</a>
-    </div> -->
-    <!-- <p style="float: right;margin-left: 500px;color: white;margin-top: 10px;"><?php //if($_SESSION){
-    // echo $_SESSION['username'];
-    // echo "<a href='signin.php' id='logout' style='color: white; float: left;'>LogOut</a>";
-    // }
-    // else{
-    //     echo "<a href='signin.php'>Login</a>";
-    }?></p> -->
-  </div> 
+  </div>
+  <?php 
+    if($_SESSION){
+     if($_SESSION['username']!='admin'){
+         echo "<p style='color:white;float: right;margin-top: 17px;'>".$_SESSION['username']."</p>";
+         echo "<a href='signin.php' id='logout' style='color: white; float: right;margin-top:5px;'>LogOut</a>";
+     }else{
+        header('Location:signin.php');
+     }
+    }
+  ?>
 </div>
 </div>
- <div id="main">
+    <div id="main">
         <h1>Book Ride</h1>
         <form id="booking" >
             Pick Point:<p><select  id="pickup">
@@ -99,65 +140,9 @@
                 <option>CedRoyal</option>
                 <option>CedSUV</option>
                 </select></p>
-            Luggage:<p><input type="text"  name="luggage" id="luggage">
+            Luggage:<p><input type="text"  name="luggage" id="luggage" style="width: 255px;">
             <p><input type="button" name="submit" value="Book Ride" id="submit"></p>
         </form>
-
- <!--  <table>
-    <thead>
-        <tr>
-            <th>User Id</th>
-            <th>User Name</th>
-            <th>Name</th>
-            <th>Mobile Number</th>
-            <th>Block Status</th>
-            <th>Admin Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead> <?php 
-        //echo $sql;
-     ?> 
-</table> -->
-<!-- <div id="result"></div> -->
-<script>
-    $(document).ready(function(){
-        $('input[type="button"]').click(function(){
-
-            var value=$(this).attr("id");
-            $(this).addClass("update")
-            $.ajax({
-                url: 'index1.php',
-                type: 'post',
-                dataType:'html',
-                data: { id:value},
-                success: function(response) {
-                    $('#result').html(response);
-                    $(this).unbind('click');
-                }
-            });
-        })
-            $('button').click(function(){
-            var mobile=$('input[name="mobile"]').val();
-            console.log(mobile);
-            var value=$(this).attr("id");
-            var name=$('input[name="name1"]').val();
-
-            var mobile=$('input[name="mobile"]').val();
-            console.log(mobile);
-            var block=$('input[name="block"]').val();
-            var admin=$('input[name="admin"]').val();
-            
-            $.ajax({
-                url: 'index2.php',
-                type: 'post',
-                dataType:'json',
-                data: { user_id:value,name:name,mobile:mobile,block:block,admin:admin,submit:submit},
-                success: function(response) {
-                    console.log(response);
-                }
-            });
-        })
-        })
-</script>
+    </div>
 </body>
 </html>

@@ -80,6 +80,7 @@
 <body>
     
 <div class="navbar">
+  <a href="index.php">Home</a>
   <a href="book.php">Book Ride</a>
   <div class="dropdown">
     <button class="dropbtn">Ride
@@ -112,13 +113,14 @@
 
 </div>
 </div>
-<label>Total Spent: <?php foreach($res as $r){
-                      echo $r;
-                      }?></label>
+
     <div id="main">
-       By Month:<input type="text" name="month" style="width: 150px;">
-                <input type="button" name="submit" value="Search">
-       By Week:<input type="text" name="week" style="width: 150px;">
+       By Month:<p><select id="month">
+                <option value="1">Last 1 month</option>
+                <option value="2">Last 2 month</option>
+                <input type="button" name="submit" value="Search"> <br>       
+       By Week:<p><select id="week">
+                <option value="7">Last 7 days</option>
                 <input type="button" name="submit1" value="Search">         
   
   <table id="tbl" style="display: block;">
@@ -151,17 +153,22 @@
                     <td>".$val."</td>
                 </tr>";
          }
+         foreach($res as $r){
+                      echo "<tr id='spent'><td>Total Spent:".$r."</td></tr>";
+                      }
           echo "</tbody>"; 
      ?> 
+
 </table>
 <table id="month_filter" style="display: block;"></table>
 <table id="week_filter" style="display: block;"></table>
+
     </div>
     <script type="text/javascript">
         $(document).ready(function(){
             $('input[name="submit"]').click(function(){
-                var value=$('input[name="month"]').val();
-                // console.log(value);
+                var value=$('#month').val();
+                //console.log(value);
                 $.ajax({
                 url: 'process.php',
                 type: 'post',
@@ -210,8 +217,8 @@
             });
             })
                 $('input[name="submit1"]').click(function(){
-                var value=$('input[name="week"]').val();
-                // console.log(value);
+                var value=$('#week').val();
+                console.log(value);
                 $.ajax({
                 url: 'process.php',
                 type: 'post',

@@ -222,7 +222,7 @@
 			$conn->close();
 		}
 		function filterMonth($user,$month,$conn){
-			$sql = 'SELECT `ride_date`,`from`,`to`,`total_distance`,`total_fare`,`status`,MONTHNAME(`ride_date`)as monthname FROM `tbl_ride` where Lower(MONTHNAME(`ride_date`))=LOWER("'.$month.'") and `customer_user_id` =(select `user_id` from `tbl_user` where `user_name`="'.$user.'")';
+			$sql = 'SELECT `ride_date`,`from`,`to`,`total_distance`,`total_fare`,`status`,MONTHNAME(`ride_date`)as monthname FROM `tbl_ride` where MONTH(ride_date) = MONTH(NOW()-INTERVAL "'.$month.'" month) and `customer_user_id` =(select `user_id` from `tbl_user` where `user_name`="'.$user.'")';
 			$result = $conn->query($sql);
 			 //print_r($result);
 				 $row=array();
@@ -327,6 +327,22 @@
 					return $res;
 					$conn->close();
 					}
+		}
+		function invoiceGenerate($id,$conn){
+			$sql = 'SELECT * FROM `tbl_ride` where `ride_id` ="'.$id.'"';
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				  while($a = $result->fetch_assoc()) {
+				     $row[]=$a;
+				  }
+				 } else {
+				   $row['error']="Error";
+				 }
+				 // $res=array(
+				 // 			'value'=>'0',
+				 // 			'result'=>$row,
+				 // 			);
+					return $row;
 		}
 		
 	}
