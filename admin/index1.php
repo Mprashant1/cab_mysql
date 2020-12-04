@@ -38,7 +38,7 @@
 		$User=new user();
 		$db=new DBconnection();
 		$user=$_SESSION['username'];
-		$val=$User->updateAdminPassword($pastpassword,$newpassword,$user,$db->conn);
+		$val=$User->updateUserPassword($pastpassword,$newpassword,$user,$db->conn);
 		echo json_encode($val);
 	}
    

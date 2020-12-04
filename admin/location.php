@@ -100,7 +100,7 @@
 				$conn->close();
 		}
 		function SetLocation($conn){
-				$sql = "SELECT `name` FROM `tbl_location`";
+				$sql = "SELECT `name` FROM `tbl_location` where `is_available`=1";
 				$result = $conn->query($sql);
 					$row=array();
 				if ($result->num_rows > 0) {
@@ -112,6 +112,32 @@
 				  echo "0 results";
 				}
 				return $row;
+				$conn->close();
+		}
+		function OriginDistance($origin,$conn){
+			$sql = 'SELECT `distance` FROM `tbl_location` where `is_available`=1 and `name`="'.$origin.'"';
+			 // print_r($origin);
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+				  // output data of each row
+				  $row = $result->fetch_assoc();
+				} else {
+				  echo "0 results";
+				}
+					return $row;
+				$conn->close();
+		}
+		function DesDistance($des,$conn){
+			$sql = 'SELECT `distance` FROM `tbl_location` where `is_available`=1 and `name`="'.$des.'"';
+			 // print_r($origin);
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+				  // output data of each row
+				  $row = $result->fetch_assoc();
+				} else {
+				  echo "0 results";
+				}
+					return $row;
 				$conn->close();
 		}
 	}

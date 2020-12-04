@@ -2,25 +2,40 @@
 		//include "user.php";
 		session_start();
 		require_once "ride.php";
+		  include "admin/location.php";
+		  include_once "config.php";
+		  $loc=new Location();
+		  $d=new DBconnection();
+		  $sq=$loc->Totallocation($d->conn);
 		$origin=$_POST['p'];
 		$des=$_POST['d'];
 		$type=$_POST['c'];
 		$luggage=$_POST['l'];
 		$price;
-		$distance=array('Charbagh'=>0,
-					 'Indra Nagar'=> 10,
-					 'BBD'=> 30,
-					 'Barabanki'=>60,
-					 'Basti'=>150,
-					 'Faizabad'=>100,
-					 'Gorakhpur'=> 210);
-		$f=$distance[$origin];
-	 	$s=$distance[$des];
+		// $distance=array('Charbagh'=>0,
+		// 				'Alambagh'=>3,
+		// 				'KrishnaNagar'=>6,
+		// 				'TediPuliya'=>12,
+		// 			 'Indra Nagar'=> 10,
+		// 			 'BBD'=> 30,
+		// 			 'Telibagh'=> 40,
+		// 			 'Barabanki'=>60,
+		// 			 'Basti'=>150,
+		// 			 'Faizabad'=>100,
+		// 			 'Gorakhpur'=> 210);
+		// $f=$distance[$origin];
+	 // 	$s=$distance[$des];
+		// $total_distance=abs($f-$s);
+		$sql=$loc->OriginDistance($origin,$d->conn);
+		$sql1=$loc->DesDistance($des,$d->conn);
+		$f=$sql['distance'];
+	 	$s=$sql1['distance'];
 		$total_distance=abs($f-$s);
 	 
 		
-		// if(isset($_SESSION['username'])){
-		
+ // if(isset($_SESSION['username'])){
+ // 	echo json_encode("success");
+ // }	
 	 if($f==$s){
 	 	$text="Pick Up and Drop Point must be different!!!";
 	 	echo json_encode($text);
@@ -102,6 +117,7 @@
 		$_SESSION['data']['total_dis']=$total_distance;
 		$_SESSION['data']['total_fare']=$price;
 	}
+
 	//print_r($price);
 	//$_SESSION['trip']=array('from'=>$origin,'to'=>$des,'type'=>$type,'luggage'=>$luggage);
    //      $ride=new Ride();
@@ -109,7 +125,11 @@
 		 // $sql=$ride->bookRide($_SESSION['username'],$origin,$des,$total,$luggage,$price,$db->conn,);
 	  //    echo json_encode($sql);
  		//  // }else{
-		 	echo json_encode("error");
+	$result=array(
+					'total'=>$_SESSION['data']['total_fare']
+				);
+	//print_r($result);
+		 	echo json_encode($result);
 	   // }
 	   // echo json_encode($_SESSION['data']);
 ?>

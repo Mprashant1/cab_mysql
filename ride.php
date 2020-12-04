@@ -13,10 +13,10 @@
 		public $totalfare;
 		public $status;
 		public $customerid;
-		function bookRide($user,$from,$to,$totaldistance,$luggage,$totalfare,$conn){
+		function bookRide($user,$from,$to,$total,$type,$luggage,$price,$conn){
 			$date = date('Y/m/d');
-			$sql = 'INSERT INTO `tbl_ride` (`ride_date`, `from`, `to`,`total_distance`,`luggage`,`total_fare`,`status`,`customer_user_id`)
-			VALUES ("'.$date.'", "'.$from.'", "'.$to.'","'.$totaldistance.'","'.$luggage.'","'.$totalfare.'","1",(SELECT `user_id` FROM `tbl_user` where `user_name`="'.$user.'"))';
+			$sql = 'INSERT INTO `tbl_ride` (`ride_date`, `from`, `to`,`total_distance`,`luggage`,`total_fare`,`status`,`cab_type`,`customer_user_id`)
+			VALUES ("'.$date.'", "'.$from.'", "'.$to.'","'.$total.'","'.$luggage.'","'.$price.'","1","'.$type.'",(SELECT `user_id` FROM `tbl_user` where `user_name`="'.$user.'"))';
 			//echo $sql;
 
 			if ($conn->query($sql) === TRUE) {
@@ -35,7 +35,7 @@
 			   	$res=$result->num_rows;
 			   		echo "<tbody>";
 			   	 while($row = $result->fetch_assoc()){
-			   	 	$text .= "<tr><td>".$row['ride_id']."</td><td>".$row['ride_date']."</td><td>".$row['from']."</td><td>".$row['to']."</td><td>".$row['total_distance']."</td><td>".$row['luggage']."</td><td>".$row['total_fare']."</td><td>".$row['status']."</td><td>".$row['customer_user_id']."</td><td ><input type='button' name='yes' id=".$row['ride_id']." value='Yes'><input type='button' name='no' id=".$row['ride_id']." value='No'></td></tr>";
+			   	 	$text .= "<tr><td>".$row['ride_id']."</td><td>".$row['ride_date']."</td><td>".$row['from']."</td><td>".$row['to']."</td><td>".$row['total_distance']."</td><td>".$row['luggage']."</td><td>".$row['total_fare']."</td><td>".$row['status']."</td><td>".$row['cab_type']."</td><td>".$row['customer_user_id']."</td><td ><input type='button' name='yes' id=".$row['ride_id']." value='Yes'><input type='button' name='no' id=".$row['ride_id']." value='No'></td></tr>";
 	
 			   	}//echo "Registered success";
 			   }
@@ -342,6 +342,22 @@
 				 // 			'value'=>'0',
 				 // 			'result'=>$row,
 				 // 			);
+					return $row;
+		}
+		function filterCabType($user,$type,$conn){
+			$sql = 'SELECT * FROM `tbl_ride` where `customer_user_id` = (select `user_id` from `tbl_user` where `user_name`="'.$user.'") and `cab_type` ="'.$type.'" and `status` = 2';
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				  while($a = $result->fetch_assoc()) {
+				     $row[]=$a;
+				  }
+				 } else {
+				   $row['error']="Error";
+				 }
+				  // $res=array(
+				  // 			'error'=>'error',
+				  // 			'result'=>$row,
+				  // 			);
 					return $row;
 		}
 		

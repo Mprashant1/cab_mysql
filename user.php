@@ -34,16 +34,25 @@
 			   	}
 
 			   	return $rtn;
+			   	$conn->close();
 		}
 		function register($username,$password,$name,$mobile,$conn){
+			$sq='select `user_name` from `tbl_user` where `user_name`="'.$username.'"';
+			$result = $conn->query($sq);
+			if ($result->num_rows > 0) {
+				$rtn="Username already exists";
+			}else{
 			 $sql = 'INSERT INTO `tbl_user` (`user_name`, `password`, `mobile`,`name`,`isblock`,`isadmin`) VALUES("'.$username.'", "'.md5($password).'", "'.$mobile.'","'.$name.'","0","0")';
 
 		        if ($conn->query($sql) === true) {
-		            //echo "New record created successfully";
-		            header('Location:signin.php');
+		            $rtn='Yeah You have registered successfully';
+
 		        } else {
-		            //echo "Error in register";
+		           $rtn='There is some error in register';
 		        }
+		    }
+		    	return $rtn;
+		        // print_r($rtn);
 		        $conn->close();
 		}
 		function pendingUser($conn){
@@ -163,32 +172,41 @@
 			$conn->close();
 		}
 		function updateUserPassword($pastpassword,$newpassword,$user,$conn){
-			$sql = 'UPDATE `tbl_user` SET `password`="'.md5($newpassword).'" WHERE `user_name`="'.$user.'" and `password`="'.md5($pastpassword).'"';
-			print_r($sql);
-
-			if ($conn->query($sql) === TRUE) {
-			  $rtn ="Password updated successfully";
-			} else {
-			  $rtn="Error updating record: " . $conn->error;
+			$sq='select `password` from `tbl_user` where `user_name`="'.$user.'"';
+			$res = $conn->query($sq);
+			if ($res->num_rows > 0) {
+				$r=$res->fetch_assoc();
+				// print_r($pastpassword);
+				if($r['password']== md5($pastpassword)){
+					$sql = 'UPDATE `tbl_user` SET `password`="'.md5($newpassword).'" WHERE `user_name`="'.$user.'" and `password`="'.md5($pastpassword).'"';
+			// print_r($sql);
+				if ($conn->query($sql) === TRUE) {
+				  $rtn ="Password updated successfully";
+				  unset($_SESSION['username']);
+				} else {
+				  $rtn="Previous password doesnot match";
+				}
+				return $rtn;
+					}
 			}
-			return $rtn;
+			
 			$conn->close();
 		}
-		function updateAdminPassword($pastpassword,$newpassword,$user,$conn){
-			$sql = 'UPDATE `tbl_user` SET `password`="'.md5($newpassword).'" WHERE `user_name`="'.$user.'" and `password`="'.md5($pastpassword).'"';
-			print_r($sql);
+		// function updateAdminPassword($pastpassword,$newpassword,$user,$conn){
+		// 	$sql = 'UPDATE `tbl_user` SET `password`="'.md5($newpassword).'" WHERE `user_name`="'.$user.'" and `password`="'.md5($pastpassword).'"';
+		// 	print_r($sql);
 
-			if ($conn->query($sql) === TRUE) {
-			  $rtn ="Password updated successfully";
-			} else {
-			  $rtn="Error updating record: " . $conn->error;
-			}
-			return $rtn;
-			$conn->close();
-		}
+		// 	if ($conn->query($sql) === TRUE) {
+		// 	  $rtn ="Password updated successfully";
+		// 	} else {
+		// 	  $rtn="Error updating record: " . $conn->error;
+		// 	}
+		// 	return $rtn;
+		// 	$conn->close();
+		// }
 	function UserSortedResult($value,$conn){
 			if($value=='ascending_user'){
-					$sql='SELECT * FROM `tbl_user` where `isblock` = 0 ORDER BY `user_name`';
+					$sql='SELECT * FROM `tbl_user` where `isblock` = 0 and `isadmin`=0 ORDER BY `user_name`';
 					$result = $conn->query($sql);
 					$row=array();
 					if ($result->num_rows > 0) {

@@ -2,20 +2,34 @@
 		include "user.php";
 		//session_start();
 		require_once "ride.php";
+		  include "admin/location.php";
+		  include_once "config.php";
+		  $loc=new Location();
+		  $d=new DBconnection();
+		  $sq=$loc->Totallocation($d->conn);
+		  
+		  // print_r($sq['data'][0]);
 		$origin=$_POST['p'];
 		$des=$_POST['d'];
 		$type=$_POST['c'];
 		$luggage=$_POST['l'];
+		// $cab=$_POST['cab'];
 		$price;
-		$distance=array('Charbagh'=>0,
-					 'Indra Nagar'=> 10,
-					 'BBD'=> 30,
-					 'Barabanki'=>60,
-					 'Basti'=>150,
-					 'Faizabad'=>100,
-					 'Gorakhpur'=> 210);
-		$f=$distance[$origin];
-	 	$s=$distance[$des];
+		// $distance=array('Charbagh'=>0,
+		// 				'Alambagh'=>3,
+		// 				'KrishnaNagar'=>6,
+		// 				'TediPuliya'=>12,
+		// 			 'Indra Nagar'=> 10,
+		// 			 'BBD'=> 30,
+		// 			 'Telibagh'=> 40,
+		// 			 'Barabanki'=>60,
+		// 			 'Basti'=>150,
+		// 			 'Faizabad'=>100,
+		// 			 'Gorakhpur'=> 210);
+		$sql=$loc->OriginDistance($origin,$d->conn);
+		$sql1=$loc->DesDistance($des,$d->conn);
+		$f=$sql['distance'];
+	 	$s=$sql1['distance'];
 		$total_distance=abs($f-$s);
 		
 	 if($f==$s){
@@ -97,17 +111,20 @@
 		// $_SESSION['data']['cab']=$type;
 		// $_SESSION['data']['luggage']=$luggage;
 		// $_SESSION['data']['total_dis']=$total_distance;
-		// $_SESSION['data']['total_fare']=$price;
+		 $_SESSION['data']['total_fare']=$price;
 	}
 	//print_r($price);
 	//$_SESSION['trip']=array('from'=>$origin,'to'=>$des,'type'=>$type,'luggage'=>$luggage);
          $ride=new Ride();
 		  $db=new DBconnection();
-		  $sql=$ride->bookRide($_SESSION['username'],$origin,$des,$total,$luggage,$price,$db->conn,);
-		  if($sql){
-	      echo json_encode($sql);}
- 		  else{
-		 	echo json_encode("error");
-	    }
+		  $sql=$ride->bookRide($_SESSION['username'],$origin,$des,$total,$type,$luggage,$price,$db->conn,);
+		  // print_r($sql);
+		  // if($sql){
+	   //    echo json_encode($sql);}
+ 		 //  else{
+		 	 $result=array(
+					'total'=>$_SESSION['data']['total_fare']
+				);
+	     echo json_encode($result);
 	   
 ?>
